@@ -2,6 +2,7 @@
   <Project Path="TaskFlow.Data.Models/TaskFlow.Data.Models.csproj" />
   <Project Path="TaskFlow.Data/TaskFlow.Data.csproj" />
   <Project Path="TaskFlow.Services/TaskFlow.Services.csproj" />
+  <Project Path="TaskFlow.Web.ViewModels/TaskFlow.Web.ViewModels.csproj" />
   <Project Path="TaskFlow.Tests/TaskFlow.Tests.csproj" />
   <Project Path="TaskFlow.Web/TaskFlow.Web.csproj" />
 </Solution>

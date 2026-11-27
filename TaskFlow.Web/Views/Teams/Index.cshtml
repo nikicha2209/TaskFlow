@@ -1,0 +1,50 @@
+@model TaskFlow.Web.ViewModels.Teams.TeamIndexViewModel
+
+@{
+    ViewData["Title"] = "My teams";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>My teams</h1>
+        <p class="text-muted mb-0">Teams you own or are a member of.</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">Create team</a>
+</div>
+
+@if (Model.Teams.Count == 0)
+{
+    <div class="alert alert-info" role="status">
+        You are not a member of any teams yet. Create one to get started.
+    </div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var team in Model.Teams)
+        {
+            <div class="col-12 col-md-6 col-xl-4">
+                <article class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h5 card-title">@team.Name</h2>
+                        @if (!string.IsNullOrWhiteSpace(team.Description))
+                        {
+                            <p class="card-text">@team.Description</p>
+                        }
+                        else
+                        {
+                            <p class="card-text text-muted">No description provided.</p>
+                        }
+                        <div class="small text-muted">
+                            <span>Role: @team.Role</span>
+                            <span class="ms-3">Members: @team.MemberCount</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a asp-controller="Projects" asp-action="Index" asp-route-teamId="@team.Id" class="btn btn-outline-primary btn-sm">View projects</a>
+                    </div>
+                </article>
+            </div>
+        }
+    </div>
+}

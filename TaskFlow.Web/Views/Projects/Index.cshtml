@@ -1,0 +1,58 @@
+@model TaskFlow.Web.ViewModels.Projects.ProjectIndexViewModel
+
+@{
+    ViewData["Title"] = $"Projects - {Model.TeamName}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <a asp-controller="Teams" asp-action="Index" class="text-decoration-none">&larr; My teams</a>
+        <h1 class="mt-2">@Model.TeamName projects</h1>
+    </div>
+    @if (Model.CanCreateProjects)
+    {
+        <a asp-action="Create" asp-route-teamId="@Model.TeamId" class="btn btn-primary">Create project</a>
+    }
+</div>
+
+@if (Model.Projects.Count == 0)
+{
+    <div class="alert alert-info" role="status">
+        This team does not have any projects yet.
+        @if (Model.CanCreateProjects)
+        {
+            <span>Create the first project to get started.</span>
+        }
+    </div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var project in Model.Projects)
+        {
+            <div class="col-12 col-md-6 col-xl-4">
+                <article class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h5 card-title">@project.Name</h2>
+                        @if (!string.IsNullOrWhiteSpace(project.Description))
+                        {
+                            <p class="card-text">@project.Description</p>
+                        }
+                        else
+                        {
+                            <p class="card-text text-muted">No description provided.</p>
+                        }
+                    </div>
+                    <div class="card-footer bg-transparent small text-muted">
+                        <div>Owner: @project.OwnerName</div>
+                        <div>Tasks: @project.TaskCount</div>
+                        @if (project.Deadline.HasValue)
+                        {
+                            <div>Deadline: @project.Deadline.Value.ToString("d")</div>
+                        }
+                    </div>
+                </article>
+            </div>
+        }
+    </div>
+}

@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TaskFlow.Data.Models\TaskFlow.Data.Models.csproj" />
     <ProjectReference Include="..\TaskFlow.Data\TaskFlow.Data.csproj" />
+    <ProjectReference Include="..\TaskFlow.Web.ViewModels\TaskFlow.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

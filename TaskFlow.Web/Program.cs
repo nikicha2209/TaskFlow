@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using TaskFlow.Data;
 using TaskFlow.Data.Models;
+using TaskFlow.Data.Repository.Interfaces;
+using TaskFlow.Services.Interfaces;
 using TaskFlow.Web.Infrastructure.Identity;
+using TaskFlow.Web.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
@@ -18,11 +21,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services
     .AddDefaultIdentity<ApplicationUser>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = true;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireDigit = false;
+        options.Password.RequireNonAlphanumeric = false;
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddTransient<IEmailSender, DevelopmentEmailSender>();
+builder.Services
+    .AddRepositories(typeof(ITeamRepository).Assembly)
+    .AddUserDefinedServices(typeof(ITeamService).Assembly);
 
 var app = builder.Build();
 
